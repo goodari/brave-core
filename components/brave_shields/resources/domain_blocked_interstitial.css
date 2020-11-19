@@ -1,0 +1,36 @@
+.domainblocking #main-content a {
+  color: var(--google-blue-700);
+  text-decoration: none;
+}
+
+.domainblocking .icon {
+  background-image: -webkit-image-set(
+      url(../../../../components/security_interstitials/core/browser/resources/images/1x/triangle_red.png) 1x,
+      url(../../../../components/security_interstitials/core/browser/resources/images/2x/triangle_red.png) 2x);
+}
+
+.domainblocking #domain {
+    background-color: white;
+    color: #fb542b;
+}
+
+.domainblocking #dont-warn-again {
+    padding-top: 1em;
+}
+
+.domainblocking input#dont-warn-again-checkbox {
+    opacity: 1;
+}
+
+.domainblocking label {
+    font-size: 110%;
+}
+.domainblocking button#primary-button {
+    background-color: #fb524b;
+    border-color: #fb524b;
+    color: white;
+}
+
+.domainblocking button {
+    border-radius: 28px;
+}

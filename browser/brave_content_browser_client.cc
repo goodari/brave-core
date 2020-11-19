@@ -25,6 +25,7 @@
 #include "brave/components/brave_rewards/browser/buildflags/buildflags.h"
 #include "brave/components/brave_shields/browser/brave_shields_util.h"
 #include "brave/components/brave_shields/browser/brave_shields_web_contents_observer.h"
+#include "brave/components/brave_shields/browser/domain_blocked_navigation_throttle.h"
 #include "brave/components/brave_shields/browser/tracking_protection_service.h"
 #include "brave/components/brave_shields/common/brave_shield_constants.h"
 #include "brave/components/brave_wallet/buildflags/buildflags.h"
@@ -618,6 +619,14 @@ BraveContentBrowserClient::CreateThrottlesForNavigation(
   if (ipfs_navigation_throttle)
     throttles.push_back(std::move(ipfs_navigation_throttle));
 #endif
+
+  if (std::unique_ptr<content::NavigationThrottle>
+          domain_blocked_navigation_throttle = brave_shields::
+              DomainBlockedNavigationThrottle::MaybeCreateThrottleFor(
+                  handle, g_brave_browser_process->ad_block_service(),
+                  g_brave_browser_process->ad_block_custom_filters_service(),
+                  g_brave_browser_process->GetApplicationLocale()))
+    throttles.push_back(std::move(domain_blocked_navigation_throttle));
 
   return throttles;
 }
