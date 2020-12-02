@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "brave/app/brave_command_ids.h"
+#include "brave/browser/brave_browser_process_impl.h"
 #include "brave/browser/profiles/profile_util.h"
 #include "brave/browser/ui/brave_pages.h"
 #include "brave/browser/ui/browser_commands.h"
@@ -20,6 +21,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
 
 #if BUILDFLAG(ENABLE_BRAVE_SYNC)
@@ -122,8 +124,18 @@ void BraveBrowserCommandController::InitBraveCommandState() {
 #if BUILDFLAG(ENABLE_TOR)
   UpdateCommandForTor();
 #endif
-  UpdateCommandEnabled(IDC_ADD_NEW_PROFILE, !is_guest_session);
-  UpdateCommandEnabled(IDC_OPEN_GUEST_PROFILE, !is_guest_session);
+  PrefService* service = g_browser_process->local_state();
+  DCHECK(service);
+
+  const bool add_person_enabled =
+    service->GetBoolean(prefs::kBrowserAddPersonEnabled);
+  const bool guest_enabled =
+    service->GetBoolean(prefs::kBrowserGuestModeEnabled);
+
+  UpdateCommandEnabled(IDC_ADD_NEW_PROFILE,
+                       !is_guest_session && add_person_enabled);
+  UpdateCommandEnabled(IDC_OPEN_GUEST_PROFILE,
+                       !is_guest_session && guest_enabled);
   UpdateCommandEnabled(IDC_TOGGLE_SPEEDREADER, true);
 }
 
