@@ -90,7 +90,7 @@ WebUIController* NewWebUI<BasicUI>(WebUI* web_ui, const GURL& url) {
   } else if (host == kRewardsInternalsHost) {
     return new BraveRewardsInternalsUI(web_ui, url.host());
 #if !defined(OS_ANDROID)
-  } else if (host == kBraveUITipHost) {
+  } else if (host == kTipHost) {
     return new BraveTipUI(web_ui, url.host());
   } else if (host == kBraveUICheckoutHost) {
     return new BraveCheckoutUI(web_ui, url.host());
@@ -129,7 +129,7 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
 #if BUILDFLAG(BRAVE_REWARDS_ENABLED)
       url.host_piece() == kRewardsPageHost ||
       url.host_piece() == kRewardsInternalsHost ||
-      url.host_piece() == kBraveUITipHost ||
+      url.host_piece() == kTipHost ||
       url.host_piece() == kBraveUICheckoutHost ||
 #endif
 #if BUILDFLAG(ENABLE_TOR)
