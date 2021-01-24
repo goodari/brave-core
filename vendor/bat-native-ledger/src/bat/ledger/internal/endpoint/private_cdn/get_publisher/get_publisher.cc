@@ -223,7 +223,6 @@ void GetPublisher::OnRequest(
     const type::UrlResponse& response,
     const std::string& publisher_key,
     GetPublisherCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   auto result = CheckStatusCode(response.status_code);
 
   auto info = type::ServerPublisherInfo::New();

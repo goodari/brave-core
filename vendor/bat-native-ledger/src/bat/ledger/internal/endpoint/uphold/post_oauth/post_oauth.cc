@@ -96,8 +96,6 @@ void PostOauth::Request(
 void PostOauth::OnRequest(
     const type::UrlResponse& response,
     PostOauthCallback callback) {
-  ledger::LogUrlResponse(__func__, response, true);
-
   type::Result result = CheckStatusCode(response.status_code);
 
   if (result != type::Result::LEDGER_OK) {

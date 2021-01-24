@@ -84,7 +84,6 @@ void PatchCard::Request(
 void PatchCard::OnRequest(
     const type::UrlResponse& response,
     PatchCardCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

@@ -108,7 +108,6 @@ void PostSuggestionsClaim::Request(
 void PostSuggestionsClaim::OnRequest(
     const type::UrlResponse& response,
     PostSuggestionsClaimCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

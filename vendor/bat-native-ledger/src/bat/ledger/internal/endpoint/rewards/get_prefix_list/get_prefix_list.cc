@@ -50,8 +50,6 @@ void GetPrefixList::Request(GetPrefixListCallback callback) {
 void GetPrefixList::OnRequest(
     const type::UrlResponse& response,
     GetPrefixListCallback callback) {
-  ledger::LogUrlResponse(__func__, response, true);
-
   if (CheckStatusCode(response.status_code) != type::Result::LEDGER_OK ||
       response.body.empty()) {
     BLOG(0, "Invalid server response for publisher prefix list");

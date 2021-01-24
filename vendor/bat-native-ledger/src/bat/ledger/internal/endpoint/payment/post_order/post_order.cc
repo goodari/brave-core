@@ -186,8 +186,6 @@ void PostOrder::OnRequest(
     const type::UrlResponse& response,
     const std::vector<type::SKUOrderItem>& items,
     PostOrderCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
-
   type::Result result = CheckStatusCode(response.status_code);
 
   if (result != type::Result::LEDGER_OK) {

@@ -137,7 +137,6 @@ void PostTransactionAnon::Request(
 void PostTransactionAnon::OnRequest(
     const type::UrlResponse& response,
     PostTransactionAnonCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

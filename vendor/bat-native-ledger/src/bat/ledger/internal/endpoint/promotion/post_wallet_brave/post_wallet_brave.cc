@@ -107,8 +107,6 @@ void PostWalletBrave::Request(
 void PostWalletBrave::OnRequest(
     const type::UrlResponse& response,
     PostWalletBraveCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
-
   std::string payment_id;
   type::Result result = CheckStatusCode(response.status_code);
 

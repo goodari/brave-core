@@ -89,7 +89,6 @@ void PutCaptcha::Request(
 void PutCaptcha::OnRequest(
     const type::UrlResponse& response,
     PutCaptchaCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

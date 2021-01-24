@@ -114,8 +114,6 @@ void PostCaptcha::Request(PostCaptchaCallback callback) {
 void PostCaptcha::OnRequest(
     const type::UrlResponse& response,
     PostCaptchaCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
-
   std::string hint;
   std::string captcha_id;
   type::Result result = CheckStatusCode(response.status_code);

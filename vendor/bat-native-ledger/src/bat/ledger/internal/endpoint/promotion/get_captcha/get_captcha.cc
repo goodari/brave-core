@@ -85,8 +85,6 @@ void GetCaptcha::Request(
 void GetCaptcha::OnRequest(
     const type::UrlResponse& response,
     GetCaptchaCallback callback) {
-  ledger::LogUrlResponse(__func__, response, true);
-
   std::string image;
   type::Result result = CheckStatusCode(response.status_code);
 

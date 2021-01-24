@@ -97,8 +97,6 @@ void GetCards::Request(
 void GetCards::OnRequest(
     const type::UrlResponse& response,
     GetCardsCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
-
   type::Result result = CheckStatusCode(response.status_code);
 
   if (result != type::Result::LEDGER_OK) {

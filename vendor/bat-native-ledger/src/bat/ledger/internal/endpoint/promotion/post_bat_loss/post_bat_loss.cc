@@ -97,7 +97,6 @@ void PostBatLoss::Request(
 void PostBatLoss::OnRequest(
     const type::UrlResponse& response,
     PostBatLossCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

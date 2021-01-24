@@ -89,7 +89,6 @@ void PutDevicecheck::Request(
 void PutDevicecheck::OnRequest(
     const type::UrlResponse& response,
     PutDevicecheckCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

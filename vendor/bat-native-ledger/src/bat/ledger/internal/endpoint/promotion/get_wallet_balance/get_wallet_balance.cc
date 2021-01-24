@@ -105,8 +105,6 @@ void GetWalletBalance::Request(GetWalletBalanceCallback callback) {
 void GetWalletBalance::OnRequest(
     const type::UrlResponse& response,
     GetWalletBalanceCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
-
   type::Result result = CheckStatusCode(response.status_code);
 
   if (result != type::Result::LEDGER_OK) {

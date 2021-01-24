@@ -104,7 +104,6 @@ void PostSuggestions::Request(
 void PostSuggestions::OnRequest(
     const type::UrlResponse& response,
     PostSuggestionsCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

@@ -75,7 +75,6 @@ void PostClobberedClaims::Request(
 void PostClobberedClaims::OnRequest(
     const type::UrlResponse& response,
     PostClobberedClaimsCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

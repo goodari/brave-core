@@ -145,8 +145,6 @@ void GetParameters::Request(GetParametersCallback callback) {
 void GetParameters::OnRequest(
     const type::UrlResponse& response,
     GetParametersCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
-
   type::RewardsParameters parameters;
   type::Result result = CheckStatusCode(response.status_code);
 

@@ -155,7 +155,6 @@ void PostClaimUphold::Request(
 void PostClaimUphold::OnRequest(
     const type::UrlResponse& response,
     PostClaimUpholdCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

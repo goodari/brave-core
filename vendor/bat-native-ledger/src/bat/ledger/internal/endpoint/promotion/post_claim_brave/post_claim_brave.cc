@@ -122,7 +122,6 @@ void PostClaimBrave::Request(
 void PostClaimBrave::OnRequest(
     const type::UrlResponse& response,
     PostClaimBraveCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

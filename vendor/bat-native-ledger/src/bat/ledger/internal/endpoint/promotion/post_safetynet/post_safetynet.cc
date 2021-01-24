@@ -111,8 +111,6 @@ void PostSafetynet::Request(PostSafetynetCallback callback) {
 void PostSafetynet::OnRequest(
     const type::UrlResponse& response,
     PostSafetynetCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
-
   std::string nonce;
   type::Result result = CheckStatusCode(response.status_code);
 

@@ -85,7 +85,6 @@ void PutSafetynet::Request(
 void PutSafetynet::OnRequest(
     const type::UrlResponse& response,
     PutSafetynetCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

@@ -101,8 +101,6 @@ void PostCards::Request(
 void PostCards::OnRequest(
     const type::UrlResponse& response,
     PostCardsCallback callback) {
-  ledger::LogUrlResponse(__func__, response, true);
-
   type::Result result = CheckStatusCode(response.status_code);
 
   if (result != type::Result::LEDGER_OK) {

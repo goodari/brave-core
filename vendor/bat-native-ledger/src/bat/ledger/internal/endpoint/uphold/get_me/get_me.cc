@@ -129,8 +129,6 @@ void GetMe::Request(
 void GetMe::OnRequest(
     const type::UrlResponse& response,
     GetMeCallback callback) {
-  ledger::LogUrlResponse(__func__, response, true);
-
   ::ledger::uphold::User user;
   type::Result result = CheckStatusCode(response.status_code);
   if (result != type::Result::LEDGER_OK) {

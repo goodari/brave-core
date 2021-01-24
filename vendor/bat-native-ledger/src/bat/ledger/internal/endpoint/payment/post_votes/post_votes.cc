@@ -100,7 +100,6 @@ void PostVotes::Request(
 void PostVotes::OnRequest(
     const type::UrlResponse& response,
     PostVotesCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

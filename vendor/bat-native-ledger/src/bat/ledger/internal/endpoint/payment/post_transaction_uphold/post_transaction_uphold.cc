@@ -94,7 +94,6 @@ void PostTransactionUphold::Request(
 void PostTransactionUphold::OnRequest(
     const type::UrlResponse& response,
     PostTransactionUpholdCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

@@ -123,8 +123,6 @@ void GetCredentials::Request(
 void GetCredentials::OnRequest(
     const type::UrlResponse& response,
     GetCredentialsCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
-
   type::Result result = CheckStatusCode(response.status_code);
   if (result != type::Result::LEDGER_OK) {
     callback(result, nullptr);

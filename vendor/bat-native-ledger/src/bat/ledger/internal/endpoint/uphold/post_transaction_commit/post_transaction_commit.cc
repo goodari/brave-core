@@ -69,7 +69,6 @@ void PostTransactionCommit::Request(
 void PostTransactionCommit::OnRequest(
     const type::UrlResponse& response,
     PostTransactionCommitCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

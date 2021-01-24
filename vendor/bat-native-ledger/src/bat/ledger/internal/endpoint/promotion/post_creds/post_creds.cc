@@ -156,8 +156,6 @@ void PostCreds::Request(
 void PostCreds::OnRequest(
     const type::UrlResponse& response,
     PostCredsCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
-
   std::string claim_id;
   type::Result result = CheckStatusCode(response.status_code);
 

@@ -14,24 +14,8 @@
 
 namespace ledger {
 
+// TODO(zenparsing): Move unit tests for this function to URLFetcher tests
 bool ShouldLogHeader(const std::string& header);
-
-std::string UrlRequestToString(
-    const std::string& url,
-    const std::vector<std::string>& headers,
-    const std::string& content,
-    const std::string& content_type,
-    const type::UrlMethod method);
-
-// DEPRECATED (use LogUrlResponse)
-std::string UrlResponseToString(
-    const char* func,
-    const type::UrlResponse& response);
-
-void LogUrlResponse(
-    const char* func,
-    const type::UrlResponse& response,
-    const bool long_response = false);
 
 }  // namespace ledger
 

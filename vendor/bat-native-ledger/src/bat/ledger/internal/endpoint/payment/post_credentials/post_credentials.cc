@@ -94,7 +94,6 @@ void PostCredentials::Request(
 void PostCredentials::OnRequest(
     const type::UrlResponse& response,
     PostCredentialsCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
   callback(CheckStatusCode(response.status_code));
 }
 

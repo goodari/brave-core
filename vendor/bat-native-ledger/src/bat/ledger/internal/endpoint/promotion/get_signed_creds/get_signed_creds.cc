@@ -123,8 +123,6 @@ void GetSignedCreds::Request(
 void GetSignedCreds::OnRequest(
     const type::UrlResponse& response,
     GetSignedCredsCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
-
   type::Result result = CheckStatusCode(response.status_code);
 
   if (result != type::Result::LEDGER_OK) {

@@ -202,8 +202,6 @@ void GetAvailable::Request(
 void GetAvailable::OnRequest(
     const type::UrlResponse& response,
     GetAvailableCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
-
   type::PromotionList list;
   std::vector<std::string> corrupted_promotions;
   type::Result result = CheckStatusCode(response.status_code);

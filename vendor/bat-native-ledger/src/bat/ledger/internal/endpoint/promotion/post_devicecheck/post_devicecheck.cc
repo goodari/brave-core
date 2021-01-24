@@ -110,8 +110,6 @@ void PostDevicecheck::Request(
 void PostDevicecheck::OnRequest(
     const type::UrlResponse& response,
     PostDevicecheckCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
-
   std::string nonce;
   type::Result result = CheckStatusCode(response.status_code);
 

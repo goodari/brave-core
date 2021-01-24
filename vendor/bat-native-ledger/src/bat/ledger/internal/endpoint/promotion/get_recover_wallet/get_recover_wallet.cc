@@ -103,8 +103,6 @@ void GetRecoverWallet::Request(
 void GetRecoverWallet::OnRequest(
     const type::UrlResponse& response,
     GetRecoverWalletCallback callback) {
-  ledger::LogUrlResponse(__func__, response);
-
   std::string payment_id;
   bool legacy_wallet = false;
   type::Result result = CheckStatusCode(response.status_code);
