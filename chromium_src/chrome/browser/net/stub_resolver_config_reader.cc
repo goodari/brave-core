@@ -15,9 +15,6 @@
 namespace {
 
 #if BUILDFLAG(UNSTOPPABLE_DOMAINS_ENABLED)
-const char kUnstoppableDomainsResolver[] =
-    "https://resolver.unstoppable.io/dns-query{?brave_UD}";
-
 void AddUnstoppableDomainsResolver(std::string* doh_templates,
                                    PrefService* local_state) {
   bool resolve_ud_enabled =
@@ -27,9 +24,10 @@ void AddUnstoppableDomainsResolver(std::string* doh_templates,
               unstoppable_domains::ResolveMethodTypes::DNS_OVER_HTTPS);
 
   if (resolve_ud_enabled &&
-      doh_templates->find(kUnstoppableDomainsResolver) == std::string::npos) {
+      doh_templates->find(unstoppable_domains::kDoHResolver) ==
+          std::string::npos) {
     *doh_templates =
-        base::StrCat({kUnstoppableDomainsResolver, " ", *doh_templates});
+        base::StrCat({unstoppable_domains::kDoHResolver, " ", *doh_templates});
   }
 }
 #endif  // BUILDFLAG(UNSTOPPABLE_DOMAINS_ENABLED)

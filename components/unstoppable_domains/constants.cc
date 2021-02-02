@@ -3,20 +3,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this file,
  * You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-#ifndef BRAVE_COMPONENTS_UNSTOPPABLE_DOMAINS_CONSTANTS_H_
-#define BRAVE_COMPONENTS_UNSTOPPABLE_DOMAINS_CONSTANTS_H_
+#include "brave/components/unstoppable_domains/constants.h"
 
 namespace unstoppable_domains {
 
-extern const char kCryptoDomain[];
-extern const char kDoHResolver[];
-
-enum class ResolveMethodTypes {
-  ASK,
-  DISABLED,
-  DNS_OVER_HTTPS,
-};
+const char kCryptoDomain[] = ".crypto";
+const char kDoHResolver[] =
+    "https://resolver.unstoppable.io/dns-query{?brave_UD}";
 
 }  // namespace unstoppable_domains
-
-#endif  // BRAVE_COMPONENTS_UNSTOPPABLE_DOMAINS_CONSTANTS_H_
