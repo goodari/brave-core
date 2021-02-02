@@ -7,7 +7,6 @@ import * as React from 'react'
 import { WalletInfo, OrderInfo, ExchangeRateInfo, Host } from '../lib/interfaces'
 import { DialogFrame } from '../../ui/components/checkout/dialogFrame'
 import { PaymentMethodPanel } from '../../ui/components/checkout/paymentMethodPanel'
-import { AddFundsPanel } from '../../ui/components/checkout/addFundsPanel'
 import { PaymentProcessing } from '../../ui/components/checkout/paymentProcessing'
 import { PaymentComplete } from '../../ui/components/checkout/paymentComplete'
 
@@ -19,7 +18,6 @@ import {
 
 type FlowState =
   'start' |
-  'add-funds' |
   'payment-processing' |
   'payment-complete'
 
@@ -49,10 +47,22 @@ export function App (props: AppProps) {
     })
   }, [props.host])
 
-  const onClose = () => { props.host.closeDialog() }
+  const onClose = () => {
+    console.log('Done Done Done!')
+    props.host.closeDialog()
+  }
+
+  const payWithWallet = () => {
+    props.host.payWithWallet();
+    setFlowState('payment-processing')
+  }
+
+  const paymentDone = () => {
+    console.log('Payment Done!')
+    setFlowState('payment-complete')
+  }
 
   if (!rateInfo || !walletInfo || !orderInfo) {
-    // TODO(zenparsing): Create a loading screen
     return (
       <DialogFrame
         showTitle={showTitle}
@@ -64,19 +74,11 @@ export function App (props: AppProps) {
     )
   }
 
-  const onShowAddFunds = () => setFlowState('add-funds')
-  const onCancelAddFunds = () => setFlowState('start')
-
   const formatExchange = createExchangeFormatter(
     rateInfo.rate,
     props.exchangeCurrency)
 
   const amountNeeded = Math.max(0, orderInfo.total - walletInfo.balance)
-
-  function getAddFundsAmounts () {
-    // TODO(zenparsing): Calculate three options
-    return []
-  }
 
   return (
     <DialogFrame
@@ -87,7 +89,6 @@ export function App (props: AppProps) {
       {
         flowState === 'start' ?
           <PaymentMethodPanel
-            canUseCreditCard={false}
             rewardsEnabled={true}
             orderDescription={orderInfo.description}
             orderTotal={formatTokenValue(orderInfo.total)}
@@ -97,24 +98,15 @@ export function App (props: AppProps) {
             walletLastUpdated={formatLastUpdatedDate(rateInfo.lastUpdated)}
             walletVerified={walletInfo.verified}
             hasSufficientFunds={amountNeeded <= 0}
-            onPayWithCreditCard={props.host.payWithCreditCard}
-            onPayWithWallet={props.host.payWithWallet}
-            onShowAddFunds={onShowAddFunds}
-          /> :
-        flowState === 'add-funds' ?
-          <AddFundsPanel
-            amountNeeded={formatTokenValue(amountNeeded)}
-            walletBalance={formatTokenValue(walletInfo.balance)}
-            walletBalanceConverted={formatExchange(walletInfo.balance)}
-            unitValueConverted={formatExchange(1)}
-            amountOptions={getAddFundsAmounts()}
-            onCancel={onCancelAddFunds}
-            onPayWithCreditCard={props.host.payWithCreditCard}
+            onPayWithWallet={payWithWallet}
           /> :
         flowState === 'payment-processing' ?
-          <PaymentProcessing /> :
+          <PaymentProcessing
+            paymentDone={paymentDone}
+          /> :
         flowState === 'payment-complete' ?
-          <PaymentComplete /> : ''
+          <PaymentComplete
+            onClose={onClose}/> : ''
       }
     </DialogFrame>
   )

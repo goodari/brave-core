@@ -8,11 +8,8 @@ import { LocaleContext } from '../localeContext'
 import { DialogTitle } from '../dialogTitle'
 import { OrderSummary } from '../orderSummary'
 import { UseWalletPanel } from '../useWalletPanel'
-import { UseCreditCardPanel } from '../useCreditCardPanel'
-import { CreditCardDetails } from '../creditCardForm'
 
 interface PaymentMethodPanelProps {
-  canUseCreditCard: boolean
   rewardsEnabled: boolean
   orderDescription: string
   orderTotal: string
@@ -22,14 +19,11 @@ interface PaymentMethodPanelProps {
   walletBalanceConverted: string
   walletVerified: boolean
   walletLastUpdated: string
-  onPayWithCreditCard: (cardDetails: CreditCardDetails) => void
   onPayWithWallet: () => void
-  onShowAddFunds: () => void
 }
 
 export function PaymentMethodPanel (props: PaymentMethodPanelProps) {
   const locale = React.useContext(LocaleContext)
-  const [continueWithCard, setContinueWithCard] = React.useState(false)
 
   return (
     <>
@@ -40,27 +34,14 @@ export function PaymentMethodPanel (props: PaymentMethodPanelProps) {
         orderTotalConverted={props.orderTotalConverted}
       />
       {
-        continueWithCard ? null :
           <UseWalletPanel
-            canAddFunds={props.canUseCreditCard}
             balance={props.walletBalance}
             balanceConverted={props.walletBalanceConverted}
             lastUpdated={props.walletLastUpdated}
             hasSufficientFunds={props.hasSufficientFunds}
             rewardsEnabled={props.rewardsEnabled}
             walletVerified={props.walletVerified}
-            onShowAddFunds={props.onShowAddFunds}
             onPayWithWallet={props.onPayWithWallet}
-          />
-      }
-      { !props.canUseCreditCard ? null :
-          <UseCreditCardPanel
-            hasSufficientFunds={props.hasSufficientFunds}
-            rewardsEnabled={props.rewardsEnabled}
-            walletVerified={props.walletVerified}
-            continueWithCard={continueWithCard}
-            setContinueWithCard={setContinueWithCard}
-            onPayWithCreditCard={props.onPayWithCreditCard}
           />
       }
     </>

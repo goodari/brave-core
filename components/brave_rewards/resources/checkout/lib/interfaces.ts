@@ -41,7 +41,6 @@ export interface HostListener {
 export interface Host {
   getLocaleString: (key: string) => string
   closeDialog: () => void
-  payWithCreditCard: () => void
   payWithWallet: () => void
   setListener: (listener: HostListener) => void
 }

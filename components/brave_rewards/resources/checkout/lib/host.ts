@@ -121,18 +121,12 @@ export function createHost (): Host {
     },
 
     closeDialog () {
-      chrome.send('dialogClose', [JSON.stringify({'action': 'cancel'})])
-    },
-
-    payWithCreditCard (...args) {
-      console.log('payWithCreditCard', ...args)
-      // TODO(zenparsing): Send update to service
+      chrome.send('dialogClose')
     },
 
     payWithWallet (...args) {
       console.log('payWithWallet', ...args)
       chrome.send('paymentRequestComplete')
-      chrome.send('dialogClose')
       // TODO(zenparsing): Send update to service
     },
 

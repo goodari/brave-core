@@ -3,7 +3,6 @@
  * You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import * as React from 'react'
-import { PlusIcon } from 'brave-ui/components/icons'
 
 import { LocaleContext, LocaleData, getLocaleWithTag } from '../localeContext'
 import { FormSection } from '../formSection'
@@ -40,29 +39,13 @@ function PayWithWalletButton (props: ActionButtonProps) {
   )
 }
 
-function AddFundsButton (props: ActionButtonProps) {
-  const handleClick = () => props.onClick()
-  return (
-    <ActionPanelButton
-      text={props.locale.get('addFundsLinkText')}
-      size='medium'
-      onClick={handleClick}
-      icon={{ image: <PlusIcon />, position: 'before' }}
-      type='accent'
-      brand='rewards'
-    />
-  )
-}
-
 interface UseWalletPanelProps {
-  canAddFunds: boolean
   balance: string
   balanceConverted: string
   lastUpdated: string
   hasSufficientFunds: boolean
   rewardsEnabled: boolean
   walletVerified: boolean
-  onShowAddFunds: () => void
   onPayWithWallet: () => void
 }
 
@@ -91,9 +74,7 @@ export function UseWalletPanel (props: UseWalletPanelProps) {
             {
               props.hasSufficientFunds
                 ? <PayWithWalletButton locale={locale} onClick={props.onPayWithWallet} />
-                : props.walletVerified && props.canAddFunds
-                  ? <AddFundsButton locale={locale} onClick={props.onShowAddFunds} />
-                  : <NotEnoughFunds>{locale.get('notEnoughFunds')}</NotEnoughFunds>
+                : <NotEnoughFunds>{locale.get('notEnoughFunds')}</NotEnoughFunds>
             }
           </ActionPanel>
         </Content>
@@ -102,9 +83,7 @@ export function UseWalletPanel (props: UseWalletPanelProps) {
         props.hasSufficientFunds &&
           <TermsOfSale>
             <span>
-              {tags.beforeTag}
-              <a href='javascript:void 0'>{tags.duringTag}</a>
-              {tags.afterTag}
+              {tags.beforeTag}{tags.duringTag}{tags.afterTag}
             </span>
           </TermsOfSale>
       }
