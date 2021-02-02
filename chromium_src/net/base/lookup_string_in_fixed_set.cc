@@ -40,6 +40,16 @@ int LookupSuffixInReversedSet(const unsigned char* graph,
     return kDafsaFound;
   }
 
+  // Recognize .crypto as a known TLD for unstoppable domains support. With
+  // this, when users type *.crypto in omnibox, it will be parsed as
+  // OmniboxInputType::URL input type instead of OmniboxInputType::UNKNOWN,
+  // The first entry in the autocomplete list will be URL instead of search.
+  constexpr char kCrypto[] = ".crypto";
+  if (base::EndsWith(host, kCrypto)) {
+    *suffix_length = strlen(kCrypto) - 1;
+    return kDafsaFound;
+  }
+
   return LookupSuffixInReversedSet_ChromiumImpl(graph, length, include_private,
                                                 host, suffix_length);
 }
