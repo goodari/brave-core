@@ -47,6 +47,7 @@ export function App (props: AppProps) {
     })
   }, [props.host])
 
+
   const onClose = () => {
     console.log('Done Done Done!')
     props.host.closeDialog()
@@ -89,6 +90,7 @@ export function App (props: AppProps) {
       {
         flowState === 'start' ?
           <PaymentMethodPanel
+            canUseCreditCard={false}
             rewardsEnabled={true}
             orderDescription={orderInfo.description}
             orderTotal={formatTokenValue(orderInfo.total)}
@@ -98,7 +100,9 @@ export function App (props: AppProps) {
             walletLastUpdated={formatLastUpdatedDate(rateInfo.lastUpdated)}
             walletVerified={walletInfo.verified}
             hasSufficientFunds={amountNeeded <= 0}
+            onPayWithCreditCard={() => {}}
             onPayWithWallet={payWithWallet}
+            onShowAddFunds={() => {}}
           /> :
         flowState === 'payment-processing' ?
           <PaymentProcessing
