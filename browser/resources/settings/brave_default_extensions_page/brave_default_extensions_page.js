@@ -25,6 +25,7 @@ Polymer({
     disableTorOption_: Boolean,
     ipfsEnabled_: Boolean,
     showChangeIPFSGatewayDialog_: Boolean,
+    udEnabled_: Boolean,
     udResolveMethod_: {
       readOnly: true,
       type: Array,
@@ -88,6 +89,9 @@ Polymer({
     });
     this.browserProxy_.getIPFSEnabled().then(enabled => {
       this.ipfsEnabled_ = enabled
+    });
+    this.browserProxy_.isUnstoppableDomainsEnabled().then(enabled => {
+      this.udEnabled_ = enabled
     });
   },
 

@@ -6,6 +6,7 @@ import("//brave/components/brave_wayback_machine/buildflags/buildflags.gni")
 import("//brave/components/ipfs/buildflags/buildflags.gni")
 import("//brave/components/speedreader/buildflags.gni")
 import("//brave/components/tor/buildflags/buildflags.gni")
+import("//brave/components/unstoppable_domains/buildflags/buildflags.gni")
 import("//build/config/features.gni")
 import("//chrome/common/features.gni")
 import("//components/gcm_driver/config.gni")
@@ -326,10 +327,17 @@ source_set("ui") {
         "webui/settings/brave_default_extensions_handler.h",
       ]
 
-      deps += [ "//third_party/widevine/cdm:buildflags" ]
+      deps += [
+        "//brave/components/unstoppable_domains/buildflags",
+        "//third_party/widevine/cdm:buildflags",
+      ]
 
       if (enable_widevine) {
         deps += [ "//brave/browser/widevine" ]
+      }
+
+      if (unstoppable_domains_enabled) {
+        deps += [ "//brave/components/unstoppable_domains:utils" ]
       }
     }
 

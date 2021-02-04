@@ -34,6 +34,9 @@ const char kBraveSyncDescription[] =
 const char kBraveIpfsName[] = "Enable IPFS";
 const char kBraveIpfsDescription[] =
     "Enable native support of IPFS.";
+const char kBraveUnstoppableDomainsName[] = "Enable unstoppable domains";
+const char kBraveUnstoppableDomainsDescription[] =
+    "Enable resolution support of unstoppable domains.";
 const char kBraveSuperReferralName[] = "Enable Brave Super Referral";
 const char kBraveSuperReferralDescription[] =
     "Use custom theme for Brave Super Referral";

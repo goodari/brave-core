@@ -107,6 +107,11 @@ cr.define('settings', function () {
         chrome.ipfs.getIPFSEnabled(resolve)
       })
     }
+
+    isUnstoppableDomainsEnabled () {
+      return cr.sendWithPromise('isUnstoppableDomainsEnabled')
+    }
+
   }
 
   cr.addSingletonGetter(BraveDefaultExtensionsBrowserProxyImpl)
