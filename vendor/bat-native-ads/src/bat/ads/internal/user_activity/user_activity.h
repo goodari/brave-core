@@ -8,22 +8,13 @@
 
 #include <stdint.h>
 
-#include <deque>
-#include <map>
+#include "base/time/time.h"
+#include "bat/ads/internal/user_activity/user_activity_event_info.h"
+#include "bat/ads/internal/user_activity/user_activity_event_types.h"
 
 namespace ads {
 
-enum class UserActivityEventType {
-  kOpenedNewOrFocusedOnExistingTab,
-  kClosedTab,
-  kPlayedMedia,
-  kBrowserWindowDidBecomeActive,
-  kBrowserWindowDidEnterBackground
-};
-
-using UserActivityEventHistory = std::deque<int64_t>;
-using UserActivityEventHistoryMap =
-    std::map<UserActivityEventType, UserActivityEventHistory>;
+const int kMaximumHistoryEntries = 3600;
 
 class UserActivity {
  public:
@@ -39,11 +30,13 @@ class UserActivity {
   static bool HasInstance();
 
   void RecordEvent(const UserActivityEventType event);
+  void RecordEventForPageTransition(const int8_t page_transition);
 
-  const UserActivityEventHistoryMap& get_history() const;
+  UserActivityEvents GetHistoryForTimeWindow(
+      const base::TimeDelta time_window) const;
 
  private:
-  UserActivityEventHistoryMap history_;
+  UserActivityEvents history_;
 };
 
 }  // namespace ads

@@ -22,11 +22,10 @@ class BatAdsUserActivityFrequencyCapTest : public UnitTestBase {
 TEST_F(BatAdsUserActivityFrequencyCapTest,
        AllowAdIfActivityWasReportedForTwoTypes) {
   // Arrange
-  UserActivity::Get()->RecordEvent(
-      UserActivityEventType::kOpenedNewOrFocusedOnExistingTab);
+  UserActivity::Get()->RecordEvent(UserActivityEventType::kOpenedNewTab);
   UserActivity::Get()->RecordEvent(UserActivityEventType::kClosedTab);
 
-  FastForwardClockBy(base::TimeDelta::FromMinutes(59));
+  AdvanceClock(base::TimeDelta::FromMinutes(59));
 
   // Act
   UserActivityFrequencyCap frequency_cap;
@@ -39,12 +38,10 @@ TEST_F(BatAdsUserActivityFrequencyCapTest,
 TEST_F(BatAdsUserActivityFrequencyCapTest,
        AllowAdIfActivityWasReportedForTwoOfTheSameType) {
   // Arrange
-  UserActivity::Get()->RecordEvent(
-      UserActivityEventType::kOpenedNewOrFocusedOnExistingTab);
-  UserActivity::Get()->RecordEvent(
-      UserActivityEventType::kOpenedNewOrFocusedOnExistingTab);
+  UserActivity::Get()->RecordEvent(UserActivityEventType::kOpenedNewTab);
+  UserActivity::Get()->RecordEvent(UserActivityEventType::kOpenedNewTab);
 
-  FastForwardClockBy(base::TimeDelta::FromMinutes(59));
+  AdvanceClock(base::TimeDelta::FromMinutes(59));
 
   // Act
   UserActivityFrequencyCap frequency_cap;
@@ -57,12 +54,11 @@ TEST_F(BatAdsUserActivityFrequencyCapTest,
 TEST_F(BatAdsUserActivityFrequencyCapTest,
        AllowAdIfActivityWasReportedForMoreThanTwoTypes) {
   // Arrange
-  UserActivity::Get()->RecordEvent(
-      UserActivityEventType::kOpenedNewOrFocusedOnExistingTab);
+  UserActivity::Get()->RecordEvent(UserActivityEventType::kOpenedNewTab);
   UserActivity::Get()->RecordEvent(UserActivityEventType::kPlayedMedia);
   UserActivity::Get()->RecordEvent(UserActivityEventType::kClosedTab);
 
-  FastForwardClockBy(base::TimeDelta::FromMinutes(59));
+  AdvanceClock(base::TimeDelta::FromMinutes(59));
 
   // Act
   UserActivityFrequencyCap frequency_cap;
@@ -75,14 +71,11 @@ TEST_F(BatAdsUserActivityFrequencyCapTest,
 TEST_F(BatAdsUserActivityFrequencyCapTest,
        AllowAdIfActivityWasReportedForMoreThanTwoOfTheSameType) {
   // Arrange
-  UserActivity::Get()->RecordEvent(
-      UserActivityEventType::kOpenedNewOrFocusedOnExistingTab);
-  UserActivity::Get()->RecordEvent(
-      UserActivityEventType::kOpenedNewOrFocusedOnExistingTab);
-  UserActivity::Get()->RecordEvent(
-      UserActivityEventType::kOpenedNewOrFocusedOnExistingTab);
+  UserActivity::Get()->RecordEvent(UserActivityEventType::kOpenedNewTab);
+  UserActivity::Get()->RecordEvent(UserActivityEventType::kOpenedNewTab);
+  UserActivity::Get()->RecordEvent(UserActivityEventType::kOpenedNewTab);
 
-  FastForwardClockBy(base::TimeDelta::FromMinutes(59));
+  AdvanceClock(base::TimeDelta::FromMinutes(59));
 
   // Act
   UserActivityFrequencyCap frequency_cap;
@@ -95,13 +88,11 @@ TEST_F(BatAdsUserActivityFrequencyCapTest,
 TEST_F(BatAdsUserActivityFrequencyCapTest,
        AllowAdIfDuplicateActivityWasReportedForMoreThanTwoTypes) {
   // Arrange
-  UserActivity::Get()->RecordEvent(
-      UserActivityEventType::kOpenedNewOrFocusedOnExistingTab);
-  UserActivity::Get()->RecordEvent(
-      UserActivityEventType::kOpenedNewOrFocusedOnExistingTab);
+  UserActivity::Get()->RecordEvent(UserActivityEventType::kOpenedNewTab);
+  UserActivity::Get()->RecordEvent(UserActivityEventType::kOpenedNewTab);
   UserActivity::Get()->RecordEvent(UserActivityEventType::kClosedTab);
 
-  FastForwardClockBy(base::TimeDelta::FromMinutes(59));
+  AdvanceClock(base::TimeDelta::FromMinutes(59));
 
   // Act
   UserActivityFrequencyCap frequency_cap;
@@ -114,10 +105,9 @@ TEST_F(BatAdsUserActivityFrequencyCapTest,
 TEST_F(BatAdsUserActivityFrequencyCapTest,
        DoNotAllowAdIfActivityWasReportedForLessThanTwoTypes) {
   // Arrange
-  UserActivity::Get()->RecordEvent(
-      UserActivityEventType::kOpenedNewOrFocusedOnExistingTab);
+  UserActivity::Get()->RecordEvent(UserActivityEventType::kOpenedNewTab);
 
-  FastForwardClockBy(base::TimeDelta::FromMinutes(59));
+  AdvanceClock(base::TimeDelta::FromMinutes(59));
 
   // Act
   UserActivityFrequencyCap frequency_cap;
@@ -142,11 +132,10 @@ TEST_F(BatAdsUserActivityFrequencyCapTest,
 TEST_F(BatAdsUserActivityFrequencyCapTest,
        DoNotAllowAdIfActivityWasReportedInThePreviousHour) {
   // Arrange
-  UserActivity::Get()->RecordEvent(
-      UserActivityEventType::kOpenedNewOrFocusedOnExistingTab);
+  UserActivity::Get()->RecordEvent(UserActivityEventType::kOpenedNewTab);
   UserActivity::Get()->RecordEvent(UserActivityEventType::kClosedTab);
 
-  FastForwardClockBy(base::TimeDelta::FromHours(1));
+  AdvanceClock(base::TimeDelta::FromHours(1) + base::TimeDelta::FromSeconds(1));
 
   // Act
   UserActivityFrequencyCap frequency_cap;

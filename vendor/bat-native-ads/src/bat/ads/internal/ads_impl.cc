@@ -133,6 +133,8 @@ void AdsImpl::OnAdsSubdivisionTargetingCodeHasChanged() {
 }
 
 void AdsImpl::OnPageLoaded(const int32_t tab_id,
+                           const int32_t page_transition,
+                           const bool has_user_gesture,
                            const std::vector<std::string>& redirect_chain,
                            const std::string& content) {
   DCHECK(!redirect_chain.empty());
@@ -141,7 +143,10 @@ void AdsImpl::OnPageLoaded(const int32_t tab_id,
     return;
   }
 
-  const std::string original_url = redirect_chain.front();
+  if (has_user_gesture) {
+    user_activity_->RecordEventForPageTransition(page_transition);
+  }
+
   const std::string url = redirect_chain.back();
 
   if (!DoesUrlHaveSchemeHTTPOrHTTPS(url)) {
@@ -149,19 +154,14 @@ void AdsImpl::OnPageLoaded(const int32_t tab_id,
     return;
   }
 
+  const std::string original_url = redirect_chain.front();
   ad_transfer_->MaybeTransferAd(tab_id, original_url);
 
   conversions_->MaybeConvert(redirect_chain);
 
   const base::Optional<TabInfo> last_visible_tab =
       TabManager::Get()->GetLastVisible();
-
-  std::string last_visible_tab_url;
-  if (last_visible_tab) {
-    last_visible_tab_url = last_visible_tab->url;
-  }
-
-  if (!SameDomainOrHost(url, last_visible_tab_url)) {
+  if (!SameDomainOrHost(url, last_visible_tab ? last_visible_tab->url : "")) {
     purchase_intent_processor_->Process(GURL(url));
   }
 

@@ -10,6 +10,7 @@
 #include "bat/ads/internal/features/bandits/epsilon_greedy_bandit_features.h"
 #include "bat/ads/internal/features/purchase_intent/purchase_intent_features.h"
 #include "bat/ads/internal/features/text_classification/text_classification_features.h"
+#include "bat/ads/internal/features/user_activity/user_activity_features.h"
 #include "bat/ads/internal/logging.h"
 
 namespace ads {
@@ -56,10 +57,17 @@ void Log() {
 
   BLOG(1, "Text classification feature is "
               << (IsTextClassificationEnabled() ? "enabled" : "disabled"));
+
   BLOG(1, "Epsilon greedy bandit feature is "
               << (IsEpsilonGreedyBanditEnabled() ? "enabled" : "disabled"));
+
   BLOG(1, "Purchase intent feature is "
               << (IsPurchaseIntentEnabled() ? "enabled" : "disabled"));
+
+#if defined(DEBUG)
+  BLOG(1, "User activity feature is "
+              << (IsUserActivityEnabled() ? "enabled" : "disabled"));
+#endif
 }
 
 }  // namespace features

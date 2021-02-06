@@ -5,16 +5,12 @@
 
 #include "bat/ads/internal/user_activity/user_activity.h"
 
-#include "base/time/time.h"
+#include "bat/ads/internal/user_activity/page_transition_util.h"
 
 namespace ads {
 
 namespace {
-
 UserActivity* g_user_activity = nullptr;
-
-const size_t kMaximumUserActivityEventHistoryEntries = 100;
-
 }  // namespace
 
 UserActivity::UserActivity() {
@@ -39,21 +35,64 @@ bool UserActivity::HasInstance() {
 }
 
 void UserActivity::RecordEvent(const UserActivityEventType event_type) {
-  if (history_.find(event_type) == history_.end()) {
-    history_.insert({event_type, {}});
-  }
+  UserActivityEventInfo user_activity_event;
+  user_activity_event.type = event_type;
+  user_activity_event.time = base::Time::Now();
 
-  const int64_t timestamp = static_cast<int64_t>(base::Time::Now().ToDoubleT());
-  history_.at(event_type).push_front(timestamp);
+  history_.push_back(user_activity_event);
 
-  if (history_.at(event_type).size() >
-      kMaximumUserActivityEventHistoryEntries) {
-    history_.at(event_type).pop_back();
+  if (history_.size() > kMaximumHistoryEntries) {
+    history_.pop_front();
   }
 }
 
-const UserActivityEventHistoryMap& UserActivity::get_history() const {
-  return history_;
+void UserActivity::RecordEventForPageTransition(const int8_t page_transition) {
+  if (page_transition == -1) {
+    return;
+  }
+
+  if (IsNewNavigation(page_transition)) {
+    RecordEvent(UserActivityEventType::kNewNavigation);
+  }
+
+  if (DidUseBackOrFowardButtonToTriggerNavigation(page_transition)) {
+    RecordEvent(UserActivityEventType::kClickedBackOrForwardNavigationButtons);
+  }
+
+  if (DidUseAddressBarToTriggerNavigation(page_transition)) {
+    RecordEvent(UserActivityEventType::kUsedAddressBar);
+  }
+
+  if (DidNavigateToHomePage(page_transition)) {
+    RecordEvent(UserActivityEventType::kClickedHomePageButton);
+  }
+
+  if (DidTransitionFromExternalApplication(page_transition)) {
+    RecordEvent(UserActivityEventType::kOpenedLinkFromExternalApplication);
+  }
+
+  const base::Optional<UserActivityEventType> event_type =
+      ToUserActivityEventType(page_transition);
+  if (event_type) {
+    RecordEvent(event_type.value());
+  }
+}
+
+UserActivityEvents UserActivity::GetHistoryForTimeWindow(
+    const base::TimeDelta time_window) const {
+  UserActivityEvents filtered_history = history_;
+
+  const base::Time time = base::Time::Now() - time_window;
+
+  const auto iter =
+      std::remove_if(filtered_history.begin(), filtered_history.end(),
+                     [&time](const UserActivityEventInfo& event) {
+                       return event.time < time;
+                     });
+
+  filtered_history.erase(iter, filtered_history.end());
+
+  return filtered_history;
 }
 
 }  // namespace ads

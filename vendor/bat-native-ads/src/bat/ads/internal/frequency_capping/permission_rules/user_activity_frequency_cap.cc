@@ -5,42 +5,26 @@
 
 #include "bat/ads/internal/frequency_capping/permission_rules/user_activity_frequency_cap.h"
 
-#include <stdint.h>
-
 #include "base/time/time.h"
-#include "bat/ads/internal/frequency_capping/frequency_capping_util.h"
-#include "bat/ads/internal/platform/platform_helper.h"
+#include "bat/ads/internal/features/user_activity/user_activity_features.h"
 #include "bat/ads/internal/user_activity/user_activity.h"
+#include "bat/ads/internal/user_activity/user_activity_scoring.h"
+#include "bat/ads/internal/user_activity/user_activity_trigger_info.h"
+#include "bat/ads/internal/user_activity/user_activity_util.h"
 
 namespace ads {
-
-namespace {
-
-double GetPointsForEventType(const UserActivityEventType event_type) {
-  switch (event_type) {
-    case UserActivityEventType::kOpenedNewOrFocusedOnExistingTab:
-    case UserActivityEventType::kClosedTab:
-    case UserActivityEventType::kPlayedMedia: {
-      return 1.0;
-    }
-
-    case UserActivityEventType::kBrowserWindowDidBecomeActive:
-    case UserActivityEventType::kBrowserWindowDidEnterBackground: {
-      return 0.5;
-    }
-  }
-}
-
-}  // namespace
 
 UserActivityFrequencyCap::UserActivityFrequencyCap() = default;
 
 UserActivityFrequencyCap::~UserActivityFrequencyCap() = default;
 
 bool UserActivityFrequencyCap::ShouldAllow() {
-  const UserActivityEventHistoryMap history =
-      UserActivity::Get()->get_history();
-  if (!DoesRespectCap(history)) {
+  const base::TimeDelta time_window = features::GetUserActivityTimeWindow();
+
+  const UserActivityEvents events =
+      UserActivity::Get()->GetHistoryForTimeWindow(time_window);
+
+  if (!DoesRespectCap(events)) {
     return false;
   }
 
@@ -52,32 +36,20 @@ std::string UserActivityFrequencyCap::get_last_message() const {
 }
 
 bool UserActivityFrequencyCap::DoesRespectCap(
-    const UserActivityEventHistoryMap& history) {
-  if (PlatformHelper::GetInstance()->IsMobile()) {
-    return true;
-  }
+    const UserActivityEvents& events) {
+  const UserActivityTriggers triggers =
+      ToUserActivityTriggers(features::GetUserActivityTriggers());
 
-  const int64_t time_constraint = base::Time::kSecondsPerHour;
+  const double score = GetUserActivityScore(triggers, events);
 
-  double score = 0.0;
+  const double threshold = features::GetUserActivityThreshold();
+  if (score < threshold) {
+#if defined(DEBUG)
+    last_message_ = StringPrintf(
+        "User activity score of %f is below the required threshold of %f",
+        score, threshold);
+#endif
 
-  for (const auto& item : history) {
-    const UserActivityEventHistory user_activity_event_history = item.second;
-
-    const int occurrences = OccurrencesForRollingTimeConstraint(
-        user_activity_event_history, time_constraint);
-
-    if (occurrences == 0) {
-      continue;
-    }
-
-    const UserActivityEventType event_type = item.first;
-    const double points = GetPointsForEventType(event_type);
-
-    score += points * occurrences;
-  }
-
-  if (score < 2.0) {
     return false;
   }
 

@@ -60,6 +60,7 @@ source_set("brave_ads_unit_tests") {
       "//brave/vendor/bat-native-ads/src/bat/ads/internal/features/bandits/epsilon_greedy_bandit_features_unittest.cc",
       "//brave/vendor/bat-native-ads/src/bat/ads/internal/features/purchase_intent/purchase_intent_features_unittest.cc",
       "//brave/vendor/bat-native-ads/src/bat/ads/internal/features/text_classification/text_classification_features_unittest.cc",
+      "//brave/vendor/bat-native-ads/src/bat/ads/internal/features/user_activity/user_activity_features_unittest.cc",
       "//brave/vendor/bat-native-ads/src/bat/ads/internal/frequency_capping/exclusion_rules/conversion_frequency_cap_unittest.cc",
       "//brave/vendor/bat-native-ads/src/bat/ads/internal/frequency_capping/exclusion_rules/daily_cap_frequency_cap_unittest.cc",
       "//brave/vendor/bat-native-ads/src/bat/ads/internal/frequency_capping/exclusion_rules/daypart_frequency_cap_unittest.cc",
@@ -131,7 +132,10 @@ source_set("brave_ads_unit_tests") {
       "//brave/vendor/bat-native-ads/src/bat/ads/internal/unittest_util.cc",
       "//brave/vendor/bat-native-ads/src/bat/ads/internal/unittest_util.h",
       "//brave/vendor/bat-native-ads/src/bat/ads/internal/url_util_unittest.cc",
+      "//brave/vendor/bat-native-ads/src/bat/ads/internal/user_activity/page_transition_util_unittest.cc",
+      "//brave/vendor/bat-native-ads/src/bat/ads/internal/user_activity/user_activity_scoring_unittest.cc",
       "//brave/vendor/bat-native-ads/src/bat/ads/internal/user_activity/user_activity_unittest.cc",
+      "//brave/vendor/bat-native-ads/src/bat/ads/internal/user_activity/user_activity_util_unittest.cc",
     ]
 
     if (!is_android) {
@@ -165,6 +169,5 @@ source_set("brave_ads_unit_tests") {
     data = [ "//brave/vendor/bat-native-ads/data/" ]
 
     configs += [ "//brave/vendor/bat-native-ads:internal_config" ]
-
   }  # if (brave_ads_enabled)
 }  # source_set("brave_ads_unit_tests")

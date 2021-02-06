@@ -9,7 +9,7 @@
 #include <string>
 
 #include "bat/ads/internal/frequency_capping/permission_rules/permission_rule.h"
-#include "bat/ads/internal/user_activity/user_activity.h"
+#include "bat/ads/internal/user_activity/user_activity_event_info.h"
 
 namespace ads {
 
@@ -29,7 +29,7 @@ class UserActivityFrequencyCap : public PermissionRule {
  private:
   std::string last_message_;
 
-  bool DoesRespectCap(const UserActivityEventHistoryMap& history);
+  bool DoesRespectCap(const UserActivityEvents& history);
 };
 
 }  // namespace ads
