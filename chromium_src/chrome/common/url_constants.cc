@@ -32,6 +32,12 @@ const char kCastNoDestinationFoundURL[] =
 const char kChooserBluetoothOverviewURL[] =
     "https://support.brave.com/";
 
+const char kChooserHidOverviewUrl[] =
+    "https://support.brave.com/";
+
+const char kChooserSerialOverviewUrl[] =
+    "https://support.brave.com/";
+
 const char kChooserUsbOverviewURL[] =
     "https://support.brave.com/";
 
