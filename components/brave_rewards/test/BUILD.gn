@@ -51,6 +51,7 @@ source_set("brave_rewards_unit_tests") {
       "//brave/vendor/bat-native-ledger/src/bat/ledger/internal/endpoint/bitflyer/get_balance/get_balance_bitflyer_unittest.cc",
       "//brave/vendor/bat-native-ledger/src/bat/ledger/internal/endpoint/bitflyer/post_claim/post_claim_bitflyer_unittest.cc",
       "//brave/vendor/bat-native-ledger/src/bat/ledger/internal/endpoint/bitflyer/post_oauth/post_oauth_bitflyer_unittest.cc",
+      "//brave/vendor/bat-native-ledger/src/bat/ledger/internal/endpoint/bitflyer/post_transaction/post_transaction_bitflyer_unittest.cc",
       "//brave/vendor/bat-native-ledger/src/bat/ledger/internal/endpoint/payment/payment_util_unittest.cc",
       "//brave/vendor/bat-native-ledger/src/bat/ledger/internal/endpoint/payment/get_credentials/get_credentials_unittest.cc",
       "//brave/vendor/bat-native-ledger/src/bat/ledger/internal/endpoint/payment/post_credentials/post_credentials_unittest.cc",
