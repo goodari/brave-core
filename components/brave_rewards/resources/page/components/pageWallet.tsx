@@ -327,7 +327,7 @@ class PageWallet extends React.Component<Props, State> {
       return
     }
 
-    if (balance.total < 25) {
+    if (balance.total < 25 && externalWallet.type === 'uphold') {
       window.open(externalWallet.loginUrl, '_self')
       return
     }
@@ -763,10 +763,16 @@ class PageWallet extends React.Component<Props, State> {
   }
 
   showLoginMessage = () => {
-    const { balance } = this.props.rewardsData
+    const { balance, externalWallet } = this.props.rewardsData
     const walletStatus = this.getWalletStatus()
+    const walletType = externalWallet ? externalWallet.type : ''
 
-    return (!walletStatus || walletStatus === 'unverified') && balance && balance.total < 25
+    return (
+      (!walletStatus || walletStatus === 'unverified') &&
+      walletType === 'uphold' &&
+      balance &&
+      balance.total < 25
+    )
   }
 
   render () {
