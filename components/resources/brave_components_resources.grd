@@ -34,6 +34,10 @@
       <include name="IDR_BRAVE_NEW_TAB_IMG4" file="../img/newtab/history_btn.svg" type="BINDATA" />
       <include name="IDR_BRAVE_NEW_TAB_IMG2" file="../img/newtab/settings_prefs_btn.svg" type="BINDATA" />
 
+      <!-- WebUI ipfs resources -->
+      <!-- This is only used to onboard IFPS users for the first run -->
+      <include name="IDR_IPFS_ONBOARDING_HTML" file="../ipfs_onboarding_ui/ipfs_onboarding.html" type="BINDATA" />
+
       <!-- WebUI wallet resources -->
       <!-- This is only used to redirect to the chrome-extension URL for the first run -->
       <include name="IDR_BRAVE_WALLET_HTML" file="../brave_wallet_ui/brave_wallet.html" type="BINDATA" />

@@ -1,0 +1,15 @@
+import("//brave/components/common/typescript.gni")
+
+transpile_web_ui("ipfs_onboarding_ui") {
+  entry_points = [ [
+        "ipfs_onboarding",
+        rebase_path("ipfs_onboarding.tsx"),
+      ] ]
+  resource_name = "ipfs_onboarding"
+}
+
+pack_web_resources("generated_resources") {
+  resource_name = "ipfs_onboarding"
+  output_dir = "$root_gen_dir/brave/components/ipfs_onboarding_ui/resources"
+  deps = [ ":ipfs_onboarding_ui" ]
+}

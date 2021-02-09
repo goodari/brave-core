@@ -42,6 +42,7 @@
 #endif
 
 #if BUILDFLAG(IPFS_ENABLED)
+#include "brave/browser/ui/webui/ipfs/ipfs_onboarding_ui.h"
 #include "brave/browser/ui/webui/ipfs_ui.h"
 #include "brave/components/ipfs/ipfs_utils.h"
 #endif
@@ -71,6 +72,10 @@ WebUIController* NewWebUI(WebUI* web_ui, const GURL& url) {
              ipfs::IsIpfsEnabled(
                  web_ui->GetWebContents()->GetBrowserContext())) {
     return new IPFSUI(web_ui, url.host());
+  } else if (host == kIPFSOnboardingHost &&
+             ipfs::IsIpfsEnabled(
+                 web_ui->GetWebContents()->GetBrowserContext())) {
+    return new IPFSOnboardingUI(web_ui, url.host());
 #endif  // BUILDFLAG(IPFS_ENABLED)
 #if BUILDFLAG(BRAVE_WALLET_ENABLED)
   } else if (host == kWalletHost) {
@@ -111,6 +116,8 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
       url.host_piece() == kWebcompatReporterHost ||
 #if BUILDFLAG(IPFS_ENABLED)
       (url.host_piece() == kIPFSHost &&
+       base::FeatureList::IsEnabled(ipfs::features::kIpfsFeature)) ||
+      (url.host_piece() == kIPFSOnboardingHost &&
        base::FeatureList::IsEnabled(ipfs::features::kIpfsFeature)) ||
 #endif  // BUILDFLAG(IPFS_ENABLED)
 #if BUILDFLAG(BRAVE_WALLET_ENABLED)

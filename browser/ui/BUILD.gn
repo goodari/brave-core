@@ -46,6 +46,8 @@ source_set("ui") {
 
   if (ipfs_enabled) {
     sources += [
+      "webui/ipfs/ipfs_onboarding_ui.cc",
+      "webui/ipfs/ipfs_onboarding_ui.h",
       "webui/ipfs_ui.cc",
       "webui/ipfs_ui.h",
     ]
@@ -280,6 +282,8 @@ source_set("ui") {
     deps += [
       "//brave/components/ipfs",
       "//brave/components/ipfs_ui:generated_resources",
+      "//brave/components/ipfs_onboarding_ui",
+      "//brave/components/ipfs_onboarding_ui:generated_resources",
     ]
   }
 

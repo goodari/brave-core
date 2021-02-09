@@ -77,6 +77,10 @@ repack("resources") {
     sources += [
       "$root_gen_dir/brave/components/ipfs_ui/resources/ipfs_generated.pak",
     ]
+    deps += [ "//brave/components/ipfs_onboarding_ui:generated_resources" ]
+    sources += [
+      "$root_gen_dir/brave/components/ipfs_onboarding_ui/resources/ipfs_onboarding_generated.pak",
+    ]
   }
 
   if (brave_wallet_enabled) {

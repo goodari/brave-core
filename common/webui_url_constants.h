@@ -9,6 +9,7 @@
 extern const char kAdblockHost[];
 extern const char kAdblockJS[];
 extern const char kIPFSHost[];
+extern const char kIPFSOnboardingHost[];
 extern const char kWebcompatReporterHost[];
 extern const char kRewardsPageHost[];
 extern const char kRewardsInternalsHost[];
