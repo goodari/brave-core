@@ -11,9 +11,9 @@ jobs:
           node-version: '12'
       - run: npm install
       - run: yarn add --dev jest-junit
+      - run: npm run test:scripts
+      - run: npm run test-unit
       - uses: IgnusG/jest-report-action@v2.3.3
         if: always()
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm run test:scripts
-      - run: npm run test-unit
