@@ -26,7 +26,7 @@
     "lint": "node ./build/commands/scripts/commands.js lint",
     "format": "node ./build/commands/scripts/commands.js format",
     "test": "node ./build/commands/scripts/commands.js test",
-    "test:scripts": "jest build/commands/lib build/commands/scripts",
+    "test:scripts": "jest build/commands/lib build/commands/scripts --json --outputFile=result.json --testLocationInResults",
     "test-security": "npm run check_security && npm run audit_deps && node ./build/commands/scripts/commands.js start --enable_brave_update --network_log --user_data_dir_name=brave-network-test",
     "tslint": "tslint --project tsconfig-lint.json \"components/**/*.{ts,tsx}\"",
     "pep8": "pycodestyle --max-line-length 120 -r script",
@@ -34,7 +34,7 @@
     "web-ui": "webpack --config components/webpack/webpack.config.js --progress --colors",
     "build-storybook": "build-storybook -c .storybook -o .storybook-out",
     "storybook": "start-storybook",
-    "test-unit": "jest -t --ci --reporters=default --reporters=jest-junit",
+    "test-unit": "jest -t --json --outputFile=result.json --testLocationInResults",
     "test-python-scripts": "npm run pep8 && PYTHONPATH=./script python -m unittest discover -s ./script/test"
   },
   "repository": {
