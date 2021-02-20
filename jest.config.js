@@ -51,6 +51,9 @@ module.exports = {
   setupFiles: [
     "<rootDir>/components/test/testPolyfills.ts"
   ],
+  reporters: [ 
+    "default", "jest-junit" 
+  ],
   moduleNameMapper: {
     "\\.(jpg|jpeg|png|gif|eot|otf|svg|ttf|woff|woff2)$": "<rootDir>/components/test/fileMock.ts",
     "\\.(css|less)$": "identity-obj-proxy",
