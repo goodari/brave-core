@@ -56,7 +56,7 @@ type CategoryProps = {
   setPublisherPref: (publisherId: string, enabled: boolean) => any
 }
 
-function Category (props: CategoryProps) {
+export function Category (props: CategoryProps) {
   const toggleAll = (checked: boolean) => {
     props.publishers.forEach((publisher) => {
       props.setPublisherPref(publisher.publisher_id, checked)
