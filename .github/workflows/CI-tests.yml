@@ -10,7 +10,7 @@ jobs:
         with:
           node-version: '12'
       - run: npm install
-      - run: npm run test:scripts
+#      - run: npm run test:scripts
       - run: npm run test-unit
       - uses: tanmen/jest-reporter@v1
         if: always()
