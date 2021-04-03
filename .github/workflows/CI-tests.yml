@@ -21,6 +21,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
+        args: >
+          -Dsonar.organization=goodarit
+          -Dsonar.projectKey=goodari_brave-core
+          -Dsonar.sources=components/brave_new_tab_ui/containers/
+          -Dsonar.test.exclusions=components/test/brave_new_tab_ui/containers/**
+          -Dsonar.tests=components/test/brave_new_tab_ui/containers/
+          -Dsonar.verbose=true
         # Disabling shallow clone is recommended for improving relevancy of reporting
         fetch-depth: 0
     - name: SonarCloud Scan
