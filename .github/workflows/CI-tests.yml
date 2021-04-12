@@ -28,9 +28,8 @@ jobs:
         args: >
           -Dsonar.organization=goodarit
           -Dsonar.projectKey=goodari_brave-core
-          -Dsonar.sources=components/brave_new_tab_ui/containers/
-          -Dsonar.test.exclusions=components/test/brave_new_tab_ui/containers/**
-          -Dsonar.tests=components/test/brave_new_tab_ui/containers/
+          -Dsonar.sources=components/brave_new_tab_ui/containers/newTab/settings/braveToday/sources.tsx
+          -Dsonar.tests=components/test/brave_new_tab_ui/containers/sources_test.tsx
           -Dsonar.verbose=true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
